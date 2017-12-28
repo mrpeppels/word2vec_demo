@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title>Word2Vec demo</title>
+       <link rel="stylesheet" media="screen" href ="static/bootstrap.min.css">
+       <link rel="stylesheet" href="static/bootstrap-theme.min.css">
+       <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+ 
+    </head>
+    <body>
+ 
+ 
+<div class="container">
+ 
+ 
+  <h2>Word2Vec Demo</h2>
+  <form  action="" method="post" role="form">
+    {{ form.csrf }}
+    <div class="form-group">
+      <label for="name">This word...</label>
+      <input type="text" class="form-control" id="x1" name="x1" placeholder="e.g. man">
+      <br>
+      <label for="email">Is to this word...</label>
+      <input type="text" class="form-control" id="x2" name="x2" placeholder="e.g. king">
+      <br>
+      <label for="password">As this word is to X</label>
+      <input type="text" class="form-control" id="y1" name="y1" placeholder="e.g. woman (is to queen)">
+ 
+ 
+    </div>
+    <button type="submit" class="btn btn-success">Go</button>
+  </form>
+ 
+  <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+ 
+        {% for message in messages %}
+            {% if "Error" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {% for m in message[1] %} <p>{{ m }}</p>
+  {% endfor %}                </div>
+            {% endif %}
+ 
+            {% if "Error" in message[1]: %}
+                <div class="alert alert-warning">
+                {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+ <div>
+  <h3>What is this?</h3>
+  <p>
+   </br>
+   <h4>A small demo about the ease of unsupervised machine learning.</h4>
+   </br>
+   </br>
+   
+   wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"
+   </br>
+   </br>
+   from gensim.models.keyedvectors import KeyedVectors
+   </br>
+   </br>
+   vec_filepath = '/home/user/Downloads/GoogleNews-vectors-negative300.bin'
+   </br>
+   </br>
+   word_vectors = KeyedVectors.load_word2vec_format(vec_filepath, binary=True)    
+   </br>
+   </br>
+   word_vectors.most_similar_cosmul(positive=['woman', 'king'], negative=['man'])
+   </br>
+   [('queen', 0.71382287), ...]
+  </p>
+ </div>
+</div>
+<br>            
+</div>
+</div>
+</body>
+</html>
